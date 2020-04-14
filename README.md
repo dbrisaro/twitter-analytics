@@ -1,2 +1,3 @@
-# twitter-analytics
-A sample that shows how to build your own Twitter analytics.
+# Twitter Analytics Sample
+
+An example project that shows how to gather and analyze Twitter data
