@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block styles %}
+<style>
+    .line {
+        fill: none;
+        stroke: steelblue;
+        stroke-width: 2px;
+    }
+
+    div.tooltip {
+        position: absolute;
+    }
+
+    .bar {
+        fill: steelblue;
+    }
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.15.0/d3.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.js"></script>
+
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+
+<script src="{{ url_for('static', filename='scripts/datarender.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+<h1>{{ user }}</h1>
+
+<h2>Tweets</h2>
+<div>
+    <div class="container">
+        <table id="tweets" data-height="460" class="table table-striped table-bordered table-sm"></table>
+    </div>
+
+    <div id="tweet-snapshot-view">
+
+    </div>
+</div>
+
+<h2>Followers</h2>
+<div id="followers">
+</div>
+
+<h2>Following</h2>
+<div id="following">
+</div>
+
+<h2>Tweet volume</h2>
+<div id="tweetvolume" style="width: 600px; height: 600px;">
+</div>
+
+<h2>Monthly tweets</h2>
+<div id="monthlytweets" style="width: 600px; height: 600px;">
+</div>
+
+<h2>Retweet volume</h2>
+<div id="retweetvolume" style="width: 600px; height: 600px;">
+</div>
+
+<h2>Like volume</h2>
+<div id="likevolume" style="width: 600px; height: 600px;">
+</div>
+{% endblock %}
+
+{% block endscripts %}
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+<script type="text/javascript">
+    // Render the graphs with the data.
+    renderTimeChart("{{ api_url }}", "{{ user }}", "followers", "time_of_capture", "follower_count")
+    renderTimeChart("{{ api_url }}", "{{ user }}", "following", "time_of_capture", "following_count")
+
+    renderTweets("{{ api_url }}", "{{ user }}", "tweets")
+
+    renderHeatmap("{{ api_url }}", "retweetvolume", "{{ user }}", "retweets", "retweetvolume")
+    renderHeatmap("{{ api_url }}", "likevolume", "{{ user }}", "likes", "likevolume")
+    renderHeatmap("{{ api_url }}", "tweetvolume", "{{ user }}", "total_tweets", "tweetvolume")
+
+    renderBarChart("{{ api_url }}", "monthlytweets", "{{ user }}", "total_tweets", "monthlytweets")
+</script>
+{% endblock %}

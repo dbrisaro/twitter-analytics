@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+<ul>
+    {% for user in data %}
+    <li><a href="/analysis/details?user={{ user.screen_name }}">{{ user.name }} ({{ user.screen_name }})</a></li>
+    {% endfor %}
+</ul>
+{% endblock %}
