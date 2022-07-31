@@ -1,6 +1,6 @@
 FROM ubuntu:18.04
 
-MAINTAINER Den Delimarsky "d@dsc.ai"
+MAINTAINER Den "noreply@den.dev"
 
 RUN apt-get update -y && \
     apt-get install -y python3-pip python3.8 build-essential libpq-dev python3.8-venv socat
